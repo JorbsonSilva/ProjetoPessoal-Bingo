@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Bingo - Santa Dulce</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+    <div id="painel-controle">
+        <h2>Gerador de Bingo</h2>
+        
+        <label for="qtd-folhas">Qtd. de Folhas (3 cartelas por folha):</label>
+        <input type="number" id="qtd-folhas" value="10" min="1" max="100">
+        
+        <label for="serie-inicial">Número de Série Inicial:</label>
+        <input type="number" id="serie-inicial" value="1" min="1">
+        
+        <button onclick="gerarLoteDeCartelas()" id="btn-gerar">Gerar e Baixar PDF</button>
+        
+        <p id="status-mensagem" style="display:none; color: #FFD700; margin-top: 15px; font-weight: bold;"></p>
+    </div>
+
+    <div id="area-impressao"></div>
+
+    <div id="preview-container">
+        <div class="folha-a4" id="molde-folha">
+            <div class="serie-superior">Nº <span class="num-serie">000001</span></div>
+
+            <div class="cartela-bloco bloco-1">
+                <img src="panela.png" alt="Panela Elétrica" class="premio-img">
+                <table class="tabela-bingo">
+                    <thead><tr><th>D</th><th>U</th><th>L</th><th>C</th><th>E</th></tr></thead>
+                    <tbody>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+                <div class="premio-texto">1º: Panela elétrica</div>
+            </div>
+
+            <div class="cartela-bloco bloco-2">
+                <img src="tv.png" alt="TV 32 Polegadas" class="premio-img">
+                <table class="tabela-bingo">
+                    <thead><tr><th>D</th><th>U</th><th>L</th><th>C</th><th>E</th></tr></thead>
+                    <tbody>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+                <div class="premio-texto">2º: Tv 32 polegadas</div>
+            </div>
+
+            <div class="cartela-bloco bloco-3">
+                <img src="bode.png" alt="Bode" class="premio-img">
+                <table class="tabela-bingo">
+                    <thead><tr><th>D</th><th>U</th><th>L</th><th>C</th><th>E</th></tr></thead>
+                    <tbody>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+                <div class="premio-texto">3º: Um bode ou 400 no pix</div>
+            </div>
+
+            <div class="qrcode-pix">
+                <span>Pague com PIX</span>
+                <img src="qr-pix.jpeg" alt="QR Code Pix" class="img-pix">
+            </div>
+
+            <div class="preco-cartela">VALOR<br><span>R$ 10,00</span></div>
+
+            <div class="convite-festa">
+                Venha celebrar conosco a Festa de Santa Dulce dos Pobres!<br>
+                <strong>De 11 a 15 de Agosto</strong>
+            </div>
+        </div>
+
+        <div id="preview-container">
+            <div class="folha-a4" id="molde-folha">
+            
+                </div>
+        </div>
+
+        <div id="area-impressao"></div>
+
+ 
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #555;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.folha-a4 {
+    width: 794px;
+    height: 1123px;
+    background-image: url('fundo-bingo.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    background-color: white;
+}
+
+/* Número de série no topo */
+.serie-superior {
+    position: absolute;
+    top: 225px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #004494;
+}
+
+/* Bloco central do QR Code */
+
+
+.serie-central {
+    font-size: 11px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* ... mantenha as regras anteriores de body, folha-a4 e serie-superior ... */
+
+/* Blocos das Cartelas */
+.cartela-bloco {
+    position: absolute;
+    width: 285px;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Movemos de 185px para 210px para descer um pouco */
+.bloco-1 {
+    top: 210px;
+    left: 70px;
+}
+
+/* Movemos de 185px para 210px para descer um pouco */
+.bloco-2 {
+    top: 210px;
+    right: 70px;
+}
+
+/* Movemos de 565px para 585px para descer um pouco */
+.bloco-3 {
+    top: 585px;
+    left: 254px; 
+}
+
+/* Configuração para as imagens sem fundo dos prêmios */
+.premio-img {
+    width: 100%;
+    height: 150px; /* Altura máxima para não empurrar a tabela muito para baixo */
+    object-fit: contain; /* Garante que a imagem inteira apareça sem distorcer */
+    margin-bottom: 5px;
+}
+
+/* ... mantenha as regras anteriores da tabela-bingo e premio-texto ... */
+
+/* Espaço para as imagens dos prêmios */
+.premio-img-placeholder {
+    width: 100%;
+    height: 115px;
+    background-color: rgba(255, 255, 255, 0.362);
+    border: 1px dashed #004494;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #004494;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Customização das Tabelas do Bingo */
+.tabela-bingo {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.21); /* Fundo levemente translúcido para ler os números sobre a igreja */
+}
+
+.tabela-bingo th, .tabela-bingo td {
+    border: 1.5px solid #004494;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.tabela-bingo th {
+    height: 32px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #004494;
+}
+
+.tabela-bingo td {
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #004494;
+}
+
+/* Texto descritivo do prêmio embaixo da tabela */
+.premio-texto {
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #004494;
+    text-align: center;
+}
+
+/* Etiqueta de Preço ao lado da Tabela 3 */
+.preco-cartela {
+    position: absolute;
+    top: 780px; /* Altura alinhada ao meio da tabela 3 */
+    left: 560px; /* Posicionado à direita do bloco 3 */
+    background-color: #004494; /* Fundo azul combinando com a arte */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border: 2px solid #FFD700; /* Borda dourada */
+}
+
+.preco-cartela span {
+    font-size: 26px;
+    color: #FFD700; /* Amarelo dourado para destacar o número */
+    display: block;
+    margin-top: 5px;
+}
+
+/* Frase de Convite abaixo da Tabela 3 */
+.convite-festa {
+    position: absolute;
+    top: 1005px; /* Posicionado logo abaixo da tabela 3 e seu texto */
+    left: 0;
+    right: 0; /* Left 0 e Right 0 com text-align center centraliza perfeitamente */
+    text-align: center;
+    font-family: 'Georgia', serif; /* Uma fonte um pouco mais clássica para a frase */
+    font-size: 20px;
+    color: #004494;
+    font-style: italic;
+    background-color: rgba(255, 255, 255, 0.7); /* Fundo sutil para facilitar a leitura sobre a imagem */
+    padding: 10px 0;
+}
+
+.convite-festa strong {
+    font-family: 'Arial', sans-serif;
+    font-size: 22px;
+    font-style: normal;
+    display: block;
+    margin-top: 5px;
+    color: #000;
+}
+
+/* Bloco do QR Code Pix ao lado esquerdo da Tabela 3 */
+.qrcode-pix {
+    position: absolute;
+    top: 780px; /* Altura ajustada para alinhar bem com o centro da tabela */
+    left: 80px; /* Posicionado à esquerda do bloco 3 */
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border: 2px solid #004494; /* Borda azul para combinar */
+    width: 130px; /* Largura fixa para manter o quadrado bonitinho */
+}
+
+.qrcode-pix span {
+    display: block;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+    color: #004494;
+    margin-bottom: 8px;
+}
+
+.qrcode-pix .img-pix {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #ccc; /* Bordinha leve na imagem do QR Code */
+}
+
+/* --- ESTILOS DO PAINEL DE CONTROLE --- */
+#painel-controle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #004494;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    width: 280px;
+    font-family: 'Arial', sans-serif;
+    z-index: 1000;
+}
+
+#painel-controle h2 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    border-bottom: 1px solid #FFD700;
+    padding-bottom: 10px;
+    color: #FFD700;
+}
+
+#painel-controle label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+#painel-controle input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+
+#painel-controle button {
+    width: 100%;
+    padding: 12px;
+    background-color: #FFD700;
+    color: #004494;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#painel-controle button:hover {
+    background-color: #e6c200;
+}
+
+/* Centraliza o preview na tela */
+#preview-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Fica oculto até o momento exato de gerar o PDF */
+#area-impressao {
+    display: none; 
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
