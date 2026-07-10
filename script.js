@@ -58,18 +58,21 @@ async function gerarLoteDeCartelas() {
     statusDiv.style.display = 'block';
     statusDiv.textContent = 'Gerando cartelas, aguarde...';
     
+    // A MÁGICA: Grava onde o usuário estava e joga a tela pro topo (0,0) na marra!
+    const posScrollOriginal = window.scrollY;
+    window.scrollTo(0, 0);
+
     areaImpressao.innerHTML = ''; // Limpa lotes anteriores
 
-    // 1. Prepara a tela para o html2pdf conseguir "enxergar" os elementos
-    previewContainer.style.display = 'none'; // Esconde o preview
-    areaImpressao.style.display = 'block';   // Mostra a área de impressão
+    // Prepara a tela (mantendo a área de impressão no meio da tela)
+    previewContainer.style.display = 'none'; 
+    areaImpressao.style.display = 'flex'; 
+    areaImpressao.style.flexDirection = 'column';
 
-    // Loop que cria a quantidade de folhas solicitada
     for (let i = 0; i < qtdFolhas; i++) {
         const numeroSerieAtual = serieInicial + i;
         const stringSerie = String(numeroSerieAtual).padStart(6, '0');
 
-        // Clona a div do preview
         const novaFolha = molde.cloneNode(true);
         novaFolha.removeAttribute('id'); 
 
@@ -80,15 +83,7 @@ async function gerarLoteDeCartelas() {
         preencherTabelaDOM(tabelas[1], gerarCartelaUnica());
         preencherTabelaDOM(tabelas[2], gerarCartelaUnica());
 
-        // Joga a folha preenchida na área de impressão invisível
         areaImpressao.appendChild(novaFolha);
-
-        // NOVO: Usa a quebra de página oficial da biblioteca entre as folhas
-        if (i < qtdFolhas - 1) {
-            const quebra = document.createElement('div');
-            quebra.classList.add('html2pdf__page-break');
-            areaImpressao.appendChild(quebra);
-        }
     }
 
     statusDiv.textContent = 'Montando o arquivo PDF...';
@@ -99,19 +94,22 @@ async function gerarLoteDeCartelas() {
     const opcoesPDF = {
         margin:       0,
         filename:     nomeArquivo,
-        pagebreak:    { mode: 'legacy' }, // Ativa a quebra de página oficial que colocamos no JS
+        pagebreak:    { mode: 'avoid-all' },
         image:        { type: 'jpeg', quality: 1.0 },
-        html2canvas:  { scale: 2, useCORS: true }, // Scale 2 é o equilíbrio perfeito entre qualidade e precisão de corte
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } // Formato A4 oficial milimétrico
+        html2canvas:  { scale: 2, useCORS: true }, // Sem invenção de scrollY aqui
+        jsPDF:        { unit: 'px', format: [794, 1123], orientation: 'portrait' }
     };
 
     // Gera o PDF
     await html2pdf().set(opcoesPDF).from(areaImpressao).save();
 
-    // 2. Restaura a tela para o estado normal após o download
+    // Restaura a tela para o estado normal após o download
     areaImpressao.style.display = 'none';
     areaImpressao.innerHTML = ''; 
     previewContainer.style.display = 'flex';
+    
+    // Devolve a tela exatamente para a posição que o usuário estava lendo
+    window.scrollTo(0, posScrollOriginal);
 
     btnGerar.disabled = false;
     statusDiv.textContent = 'Download concluído!';

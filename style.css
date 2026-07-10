@@ -296,7 +296,7 @@ body {
 #area-impressao {
     display: none; 
     width: 794px; 
-    margin: 0 auto;
+    margin: 0 auto; /* Mantém centralizado na tela */
 }
 
 /* Remove a sombra e trava o tamanho exato no PDF */
@@ -305,7 +305,7 @@ body {
     margin: 0;
     padding: 0;
     border: none;
-    overflow: hidden; /* Essencial: impede que 1 pixel vaze e crie margens falsas */
+    overflow: hidden; 
     width: 794px;
     height: 1123px;
 }
