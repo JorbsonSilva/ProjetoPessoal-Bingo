@@ -25,7 +25,7 @@ body {
 /* Número de série no topo */
 .serie-superior {
     position: absolute;
-    top: 225px;
+    top: 285px;
     left: 0;
     right: 0;
     text-align: center;
@@ -58,13 +58,13 @@ body {
 
 /* Movemos de 185px para 210px para descer um pouco */
 .bloco-1 {
-    top: 210px;
+    top: 250px;
     left: 70px;
 }
 
 /* Movemos de 185px para 210px para descer um pouco */
 .bloco-2 {
-    top: 210px;
+    top: 250px;
     right: 70px;
 }
 
