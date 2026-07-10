@@ -56,18 +56,15 @@ async function gerarLoteDeCartelas() {
 
     btnGerar.disabled = true;
     statusDiv.style.display = 'block';
-    statusDiv.textContent = 'Gerando cartelas, aguarde...';
+    statusDiv.textContent = 'Desenhando cartelas...';
     
-    // A MÁGICA: Grava onde o usuário estava e joga a tela pro topo (0,0) na marra!
+    // Trava o scroll no topo
     const posScrollOriginal = window.scrollY;
     window.scrollTo(0, 0);
 
-    areaImpressao.innerHTML = ''; // Limpa lotes anteriores
-
-    // Prepara a tela (mantendo a área de impressão no meio da tela)
+    areaImpressao.innerHTML = ''; 
     previewContainer.style.display = 'none'; 
-    areaImpressao.style.display = 'flex'; 
-    areaImpressao.style.flexDirection = 'column';
+    areaImpressao.style.display = 'block'; 
 
     for (let i = 0; i < qtdFolhas; i++) {
         const numeroSerieAtual = serieInicial + i;
@@ -84,6 +81,13 @@ async function gerarLoteDeCartelas() {
         preencherTabelaDOM(tabelas[2], gerarCartelaUnica());
 
         areaImpressao.appendChild(novaFolha);
+
+        // Adiciona a quebra de página oficial do PDF entre as folhas
+        if (i < qtdFolhas - 1) {
+            const divQuebra = document.createElement('div');
+            divQuebra.classList.add('html2pdf__page-break');
+            areaImpressao.appendChild(divQuebra);
+        }
     }
 
     statusDiv.textContent = 'Montando o arquivo PDF...';
@@ -94,26 +98,29 @@ async function gerarLoteDeCartelas() {
     const opcoesPDF = {
         margin:       0,
         filename:     nomeArquivo,
-        pagebreak:    { mode: 'avoid-all' },
+        pagebreak:    { mode: 'legacy' }, // Ativa a quebra manual para evitar páginas em branco
         image:        { type: 'jpeg', quality: 1.0 },
-        html2canvas:  { scale: 2, useCORS: true }, // Sem invenção de scrollY aqui
+        html2canvas:  { scale: 2, useCORS: true, scrollY: 0 }, 
         jsPDF:        { unit: 'px', format: [794, 1123], orientation: 'portrait' }
     };
 
-    // Gera o PDF
-    await html2pdf().set(opcoesPDF).from(areaImpressao).save();
+    // O SEGREDO: Dá 100 milissegundos para o navegador "pintar" tudo na tela antes de tirar a foto
+    setTimeout(async () => {
+        await html2pdf().set(opcoesPDF).from(areaImpressao).save();
 
-    // Restaura a tela para o estado normal após o download
-    areaImpressao.style.display = 'none';
-    areaImpressao.innerHTML = ''; 
-    previewContainer.style.display = 'flex';
-    
-    // Devolve a tela exatamente para a posição que o usuário estava lendo
-    window.scrollTo(0, posScrollOriginal);
+        // Devolve tudo ao normal
+        areaImpressao.style.display = 'none';
+        areaImpressao.innerHTML = ''; 
+        previewContainer.style.display = 'flex';
+        window.scrollTo(0, posScrollOriginal);
 
-    btnGerar.disabled = false;
-    statusDiv.textContent = 'Download concluído!';
-    document.getElementById('serie-inicial').value = serieFinal + 1;
+        btnGerar.disabled = false;
+        statusDiv.textContent = 'Download concluído!';
+        document.getElementById('serie-inicial').value = serieFinal + 1;
+        
+        // Esconde a mensagem de sucesso depois de 3 segundos
+        setTimeout(() => statusDiv.style.display = 'none', 3000);
+    }, 100);
 }
 
 // 5. Preenche a cartela de preview assim que o site abrir

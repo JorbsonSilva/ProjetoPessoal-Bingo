@@ -292,11 +292,11 @@ body {
 }
 
 /* Fica oculto até o momento exato de gerar o PDF */
-/* Fica oculto até o momento exato de gerar o PDF */
 #area-impressao {
     display: none; 
     width: 794px; 
-    margin: 0 auto; /* Mantém centralizado na tela */
+    background-color: white;
+    margin: 0 auto;
 }
 
 /* Remove a sombra e trava o tamanho exato no PDF */
@@ -307,5 +307,6 @@ body {
     border: none;
     overflow: hidden; 
     width: 794px;
-    height: 1123px;
+    height: 1120px; /* Reduzimos 3px para NUNCA transbordar e gerar página extra */
+    position: relative; /* Mantém as imagens e tabelas no lugar correto */
 }
