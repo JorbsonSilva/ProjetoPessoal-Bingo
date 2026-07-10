@@ -120,7 +120,7 @@ async function gerarLoteDeCartelas() {
         
         // Esconde a mensagem de sucesso depois de 3 segundos
         setTimeout(() => statusDiv.style.display = 'none', 3000);
-    }, 100);
+    }, 1000);
 }
 
 // 5. Preenche a cartela de preview assim que o site abrir
