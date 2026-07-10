@@ -64,17 +64,14 @@ async function gerarLoteDeCartelas() {
     previewContainer.style.display = 'none'; // Esconde o preview
     areaImpressao.style.display = 'block';   // Mostra a área de impressão
 
+    // Loop que cria a quantidade de folhas solicitada
     for (let i = 0; i < qtdFolhas; i++) {
         const numeroSerieAtual = serieInicial + i;
         const stringSerie = String(numeroSerieAtual).padStart(6, '0');
 
-        // Clona a div do preview (true significa que clona tudo que tem dentro)
+        // Clona a div do preview
         const novaFolha = molde.cloneNode(true);
-        novaFolha.removeAttribute('id'); // Removemos o ID para não dar conflito
-
-        if (i < qtdFolhas - 1) {
-            novaFolha.style.pageBreakAfter = 'always';
-        }
+        novaFolha.removeAttribute('id'); 
 
         novaFolha.querySelectorAll('.num-serie').forEach(el => el.textContent = stringSerie);
 
@@ -83,7 +80,15 @@ async function gerarLoteDeCartelas() {
         preencherTabelaDOM(tabelas[1], gerarCartelaUnica());
         preencherTabelaDOM(tabelas[2], gerarCartelaUnica());
 
+        // Joga a folha preenchida na área de impressão invisível
         areaImpressao.appendChild(novaFolha);
+
+        // NOVO: Usa a quebra de página oficial da biblioteca entre as folhas
+        if (i < qtdFolhas - 1) {
+            const quebra = document.createElement('div');
+            quebra.classList.add('html2pdf__page-break');
+            areaImpressao.appendChild(quebra);
+        }
     }
 
     statusDiv.textContent = 'Montando o arquivo PDF...';
@@ -94,9 +99,10 @@ async function gerarLoteDeCartelas() {
     const opcoesPDF = {
         margin:       0,
         filename:     nomeArquivo,
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true }, // useCORS ajuda a carregar a imagem de fundo melhor
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } // Formato A4 travado oficialmente
+        pagebreak:    { mode: 'legacy' }, // Ativa a quebra de página oficial que colocamos no JS
+        image:        { type: 'jpeg', quality: 1.0 },
+        html2canvas:  { scale: 2, useCORS: true }, // Scale 2 é o equilíbrio perfeito entre qualidade e precisão de corte
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } // Formato A4 oficial milimétrico
     };
 
     // Gera o PDF

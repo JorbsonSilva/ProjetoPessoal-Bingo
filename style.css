@@ -292,14 +292,20 @@ body {
 }
 
 /* Fica oculto até o momento exato de gerar o PDF */
+/* Fica oculto até o momento exato de gerar o PDF */
 #area-impressao {
     display: none; 
-    width: 794px; /* ESSENCIAL: Trava a largura exatamente no tamanho da folha A4 */
+    width: 794px; 
     margin: 0 auto;
 }
 
-/* Remove a sombra apenas no PDF para não criar margens invisíveis no recorte */
+/* Remove a sombra e trava o tamanho exato no PDF */
 #area-impressao .folha-a4 {
     box-shadow: none;
-    margin-bottom: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    overflow: hidden; /* Essencial: impede que 1 pixel vaze e crie margens falsas */
+    width: 794px;
+    height: 1123px;
 }
