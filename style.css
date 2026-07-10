@@ -75,11 +75,13 @@ body {
 }
 
 /* Configuração para as imagens sem fundo dos prêmios */
+/* Configuração para as imagens sem fundo dos prêmios */
 .premio-img {
     width: 100%;
-    height: 150px; /* Altura máxima para não empurrar a tabela muito para baixo */
-    object-fit: contain; /* Garante que a imagem inteira apareça sem distorcer */
-    margin-bottom: 5px;
+    max-width: 160px; /* Limita a largura máxima para não esparramar */
+    height: 150px; /* Reduzimos de 150px para 85px para ficar proporcional */
+    object-fit: contain; /* Garante que a imagem não distorça */
+    margin-bottom: 10px;
 }
 
 /* ... mantenha as regras anteriores da tabela-bingo e premio-texto ... */
@@ -117,7 +119,8 @@ body {
     height: 32px;
     font-size: 18px;
     font-weight: bold;
-    color: #004494;
+    background-color: #004594bc; /* Adiciona o fundo azul combinando com a arte */
+    color: white; /* Muda a letra para branco para dar destaque */
 }
 
 .tabela-bingo td {
@@ -263,10 +266,22 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.2s;
+    margin-bottom: 10px; /* Adicionado para separar os dois botões */
 }
 
 #painel-controle button:hover {
     background-color: #e6c200;
+}
+
+/* Novo estilo exclusivo para o botão de Print */
+#btn-print {
+    background-color: #ffffff;
+    color: #004494;
+    border: 2px solid #FFD700;
+}
+
+#btn-print:hover {
+    background-color: #f0f0f0;
 }
 
 /* Centraliza o preview na tela */

@@ -6,6 +6,7 @@
     <title>Gerador de Bingo - Santa Dulce</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -17,13 +18,13 @@
         
         <label for="serie-inicial">Número de Série Inicial:</label>
         <input type="number" id="serie-inicial" value="1" min="1">
+
+        <button onclick="baixarPrintModelo()" id="btn-print">Baixar Modelo (Print)</button>
         
         <button onclick="gerarLoteDeCartelas()" id="btn-gerar">Gerar e Baixar PDF</button>
         
         <p id="status-mensagem" style="display:none; color: #FFD700; margin-top: 15px; font-weight: bold;"></p>
     </div>
-
-    <div id="area-impressao"></div>
 
     <div id="preview-container">
         <div class="folha-a4" id="molde-folha">
@@ -71,7 +72,7 @@
                         <tr><td></td><td></td><td></td><td></td><td></td></tr>
                     </tbody>
                 </table>
-                <div class="premio-texto">3º: Um bode ou 400 no pix</div>
+                <div class="premio-texto">3º: Um bode ou R$ 400,00 no pix</div>
             </div>
 
             <div class="qrcode-pix">
@@ -86,16 +87,7 @@
                 <strong>De 11 a 15 de Agosto</strong>
             </div>
         </div>
-
-        <div id="preview-container">
-            <div class="folha-a4" id="molde-folha">
-            
-                </div>
-        </div>
-
-        <div id="area-impressao"></div>
-
- 
+    </div> <div id="area-impressao"></div>
 
     <script src="script.js"></script>
 </body>

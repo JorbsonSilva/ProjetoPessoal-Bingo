@@ -44,8 +44,6 @@ function preencherTabelaDOM(tabela, matrizCartela) {
 }
 
 // 4. Função Principal executada pelo botão
-// ... (mantenha as funções gerarNumeros, gerarCartelaUnica e preencherTabelaDOM iguais) ...
-
 async function gerarLoteDeCartelas() {
     const qtdFolhas = parseInt(document.getElementById('qtd-folhas').value);
     const serieInicial = parseInt(document.getElementById('serie-inicial').value);
@@ -114,37 +112,53 @@ async function gerarLoteDeCartelas() {
     document.getElementById('serie-inicial').value = serieFinal + 1;
 }
 
-// 3. Preenche a cartela de preview assim que o site abrir
+// 5. Preenche a cartela de preview assim que o site abrir
 document.addEventListener('DOMContentLoaded', () => {
     const moldeInicial = document.getElementById('molde-folha');
-    const tabelasPreview = moldeInicial.querySelectorAll('.tabela-bingo');
-    
-    // Injeta números aleatórios no preview inicial
-    preencherTabelaDOM(tabelasPreview[0], gerarCartelaUnica());
-    preencherTabelaDOM(tabelasPreview[1], gerarCartelaUnica());
-    preencherTabelaDOM(tabelasPreview[2], gerarCartelaUnica());
+    if(moldeInicial) {
+        const tabelasPreview = moldeInicial.querySelectorAll('.tabela-bingo');
+        
+        // Injeta números aleatórios no preview inicial
+        preencherTabelaDOM(tabelasPreview[0], gerarCartelaUnica());
+        preencherTabelaDOM(tabelasPreview[1], gerarCartelaUnica());
+        preencherTabelaDOM(tabelasPreview[2], gerarCartelaUnica());
+    }
 });
 
-    statusDiv.textContent = 'Montando o arquivo PDF...';
+// Função para tirar um Print (PNG) do preview atual para aprovação
+function baixarPrintModelo() {
+    const preview = document.querySelector('#preview-container .folha-a4');
+    const statusDiv = document.getElementById('status-mensagem');
+    const btnPrint = document.getElementById('btn-print');
 
-    // 5. Configura e chama a biblioteca para gerar o PDF
-    const serieFinal = serieInicial + qtdFolhas - 1;
-    const nomeArquivo = `Bingo_Santa_Dulce_${String(serieInicial).padStart(6,'0')}_a_${String(serieFinal).padStart(6,'0')}.pdf`;
+    // Avisa o usuário que está gerando a imagem
+    btnPrint.disabled = true;
+    statusDiv.style.display = 'block';
+    statusDiv.textContent = 'Gerando imagem para aprovação...';
 
-    const opcoesPDF = {
-        margin:       0,
-        filename:     nomeArquivo,
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 }, // Melhora a resolução para impressão gráfica
-        jsPDF:        { unit: 'px', format: [794, 1123], orientation: 'portrait' }
-    };
+    // Configuração do html2canvas para tirar a "foto" da div
+    html2canvas(preview, { 
+        scale: 2, // Escala 2 garante uma imagem com boa resolução para Whatsapp/Email
+        useCORS: true,
+        backgroundColor: '#ffffff'
+    }).then(canvas => {
+        // Transforma o canvas em um link de download
+        const link = document.createElement('a');
+        link.download = 'modelo_aprovacao_bingo.png';
+        link.href = canvas.toDataURL('image/png');
+        
+        // Simula o clique para baixar
+        link.click();
 
-    // Gera o PDF e faz o download automático
-    await html2pdf().set(opcoesPDF).from(areaImpressao).save();
-
-    // Restaura o botão e o aviso
-    btnGerar.disabled = false;
-    statusDiv.textContent = 'Download concluído!';
-    
-    // Atualiza automaticamente o número inicial no menu para o próximo lote
-    document.getElementById('serie-inicial').value = serieFinal + 1;
+        // Restaura o botão e avisa que concluiu
+        statusDiv.textContent = 'Print baixado com sucesso!';
+        btnPrint.disabled = false;
+        
+        // Esconde a mensagem após 3 segundos
+        setTimeout(() => {
+            if (!document.getElementById('btn-gerar').disabled) {
+                statusDiv.style.display = 'none';
+            }
+        }, 3000);
+    });
+}
