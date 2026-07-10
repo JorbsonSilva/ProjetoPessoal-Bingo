@@ -95,8 +95,8 @@ async function gerarLoteDeCartelas() {
         margin:       0,
         filename:     nomeArquivo,
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'px', format: [794, 1123], orientation: 'portrait' }
+        html2canvas:  { scale: 2, useCORS: true }, // useCORS ajuda a carregar a imagem de fundo melhor
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } // Formato A4 travado oficialmente
     };
 
     // Gera o PDF

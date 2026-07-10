@@ -294,8 +294,12 @@ body {
 /* Fica oculto até o momento exato de gerar o PDF */
 #area-impressao {
     display: none; 
-    width: 100%;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+    width: 794px; /* ESSENCIAL: Trava a largura exatamente no tamanho da folha A4 */
+    margin: 0 auto;
+}
+
+/* Remove a sombra apenas no PDF para não criar margens invisíveis no recorte */
+#area-impressao .folha-a4 {
+    box-shadow: none;
+    margin-bottom: 0;
 }
